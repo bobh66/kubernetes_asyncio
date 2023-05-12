@@ -55,7 +55,7 @@ class ApiClient(object):
     PRIMITIVE_TYPES = (float, bool, bytes, six.text_type) + six.integer_types
     NATIVE_TYPES_MAPPING = {
         'int': int,
-        'long': int if six.PY3 else long,  # noqa: F821
+        'long': int,  # noqa: F821
         'float': float,
         'str': str,
         'bool': bool,
@@ -200,7 +200,7 @@ class ApiClient(object):
 
         response_type = response_types_map.get(response_data.status, None)
 
-        if six.PY3 and response_type not in ["file", "bytes"]:
+        if response_type not in ["file", "bytes", "str"]:
             match = None
             content_type = response_data.getheader('content-type')
             if content_type is not None:
